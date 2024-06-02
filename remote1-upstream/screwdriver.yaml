@@ -1,0 +1,15 @@
+shared:
+  image: node:20
+  steps:
+    - test: echo 'test'
+
+jobs:
+  A-success:
+    requires: [ ~commit, ~pr ]
+    annotations:
+      screwdriver.cd/displayName: "A○"
+
+  A-failure:
+    requires: [ ~commit, ~pr ]
+    annotations:
+      screwdriver.cd/displayName: "A×"
