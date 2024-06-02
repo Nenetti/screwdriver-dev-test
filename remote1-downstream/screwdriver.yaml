@@ -1,8 +1,7 @@
 shared:
-  image: node:20
+  image: bitnami/git:latest
   steps:
     - test: echo 'test'
-
 
 jobs:
   A-success:

@@ -1,5 +1,5 @@
 shared:
-  image: node:20
+  image: bitnami/git:latest
   steps:
     - test: echo 'test'
 
@@ -13,3 +13,9 @@ jobs:
     requires: [ ~commit, ~pr ]
     annotations:
       screwdriver.cd/displayName: "A×"
+    steps: &failure-steps
+      - meta: |
+          if [ "$(meta get restart)" -ne '1' ]; then
+            meta set restart '1'
+            exit 1
+          fi
