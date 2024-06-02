@@ -1,0 +1,111 @@
+shared:
+  image: bitnami/git:latest
+  steps:
+    - test: echo 'test'
+
+jobs:
+  # --------------------------------------------------------------------------------------------------------------------
+  #     1 triggers
+  # --------------------------------------------------------------------------------------------------------------------
+  A-success:
+    requires: [ ~commit, ~pr ]
+    annotations:
+      screwdriver.cd/displayName: "✅ A [ ~commit, ~pr ]"
+
+  A-failure:
+    requires: [ ~commit, ~pr ]
+    annotations:
+      screwdriver.cd/displayName: "❌ A [ ~commit, ~pr ]"
+    steps: &failure_steps
+      - meta: |
+          if [ "$(meta get restart)" != '1' ]; then
+            meta set restart '1'
+            exit 1
+          fi
+
+  B-success:
+    requires: [ ~commit, ~pr ]
+    annotations:
+      screwdriver.cd/displayName: "✅ B [ ~commit, ~pr ]"
+
+  B-failure:
+    requires: [ ~commit, ~pr ]
+    annotations:
+      screwdriver.cd/displayName: "❌ B× [ ~commit, ~pr ]"
+    steps: *failure_steps
+
+  # --------------------------------------------------------------------------------------------------------------------
+  #     2 triggers (2 downstream)
+  # --------------------------------------------------------------------------------------------------------------------
+  A-success-and-B-success:
+    requires: [ sd@2:A-success, sd@3:B-success ]
+    annotations:
+      screwdriver.cd/displayName: "✅ AB [ sd@2:A○, sd@3:B○ ]"
+
+  A-success-and-B-not-run:
+    requires: [ sd@2:A-success, sd@3:B-not-run ]
+    annotations:
+      screwdriver.cd/displayName: "🔳 AB [ sd@2:A○, sd@3:B× ]"
+
+  A-not-run-and-B-success:
+    requires: [ sd@2:A-not-run, sd@3:B-success ]
+    annotations:
+      screwdriver.cd/displayName: "🔳 AB [ sd@2:A×, sd@3:B○ ]"
+
+  A-not-run-and-B-not-run:
+    requires: [ sd@2:A-not-run, sd@3:B-not-run ]
+    annotations:
+      screwdriver.cd/displayName: "🔳 AB [ sd@2:A×, sd@3:B× ]"
+
+  tilde-A-success-tilde-B-success:
+    requires: [ ~sd@2:A-success, ~sd@3:B-success ]
+    annotations:
+      screwdriver.cd/displayName: "✅ AB [ ~sd@2:A○, ~sd@3:B○ ]"
+
+  tilde-A-not-run-tilde-B-success:
+    requires: [ ~sd@2:A-not-run, ~sd@3:B-success ]
+    annotations:
+      screwdriver.cd/displayName: "✅ AB [ ~sd@2:A×, ~sd@3:B○ ]"
+
+  tilde-A-success-tilde-B-not-run:
+    requires: [ ~sd@2:A-success, ~sd@3:B-not-run ]
+    annotations:
+      screwdriver.cd/displayName: "✅ AB [ ~sd@2:A○, ~sd@3:B× ]"
+
+  tilde-A-not-run-tilde-B-not-run:
+    requires: [ ~sd@2:A-not-run, ~sd@3:B-not-run ]
+    annotations:
+      screwdriver.cd/displayName: "🔳 AB [ ~sd@2:A×, ~sd@3:B× ]"
+
+  # --------------------------------------------------------------------------------------------------------------------
+  #     3 triggers
+  # --------------------------------------------------------------------------------------------------------------------
+  A-success-and-B-success-and-C-success:
+    requires: [ sd@2:A-success, sd@2:B-success, sd@3:C-success ]
+    annotations:
+      screwdriver.cd/displayName: "✅ ABC [ sd@2:A○, sd@2:B○, sd@3:C○ ]"
+
+  A-success-and-B-success-and-C-not-run:
+    requires: [ sd@2:A-success, sd@2:B-success, sd@3:C-success ]
+    annotations:
+      screwdriver.cd/displayName: "🔳 ABC [ sd@2:A○, sd@2:B○, sd@3:C× ]"
+
+  A-success-and-B-not-run-and-C-not-run:
+    requires: [ sd@2:A-success, sd@2:B-success, sd@3:C-success ]
+    annotations:
+      screwdriver.cd/displayName: "🔳 ABC [ sd@2:A○, sd@2:B×, sd@3:C× ]"
+
+  A-success-and-B-success-and-tilde-C-success:
+    requires: [ sd@2:A-success, sd@2:B-success, ~sd@3:C-success ]
+    annotations:
+      screwdriver.cd/displayName: "✅ ABC [ sd@2:A○, sd@2:B○, ~sd@3:C○ ]"
+
+  A-success-and-B-success-and-tilde-C-not-run:
+    requires: [ sd@2:A-success, sd@2:B-success, ~sd@3:C-not-run ]
+    annotations:
+      screwdriver.cd/displayName: "✅ ABC [ sd@2:A○, sd@2:B○, ~sd@3:C× ]"
+
+  A-success-and-B-not-run-and-tilde-C-not-run:
+    requires: [ sd@2:A-success, sd@2:B-not-run, ~sd@3:C-not-run ]
+    annotations:
+      screwdriver.cd/displayName: "🔳 ABC [ sd@2:A○, sd@2:B×, sd@3:C× ]"

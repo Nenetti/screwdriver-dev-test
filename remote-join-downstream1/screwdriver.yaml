@@ -1,0 +1,125 @@
+shared:
+  image: bitnami/git:latest
+  steps:
+    - test: echo 'test'
+
+jobs:
+  A-success:
+    requires: [ sd@1:A-success ]
+    annotations:
+      screwdriver.cd/displayName: "✅ A [ sd@1:A○ ]"
+
+  B-success:
+    requires: [ sd@1:B-success ]
+    annotations:
+      screwdriver.cd/displayName: "✅ B [ sd@1:B○ ]"
+
+  A-failure:
+    requires: [ sd@1:A-success ]
+    annotations:
+      screwdriver.cd/displayName: "❌ A [ sd@1:A○ ]"
+
+  B-failure:
+    requires: [ sd@1:B-success ]
+    annotations:
+      screwdriver.cd/displayName: "❌ B [ sd@1:B○ ]"
+
+  tilde-A-success:
+    requires: [ sd@1:A-success ]
+    annotations:
+      screwdriver.cd/displayName: "✅ ~A [ ~sd@1:A○ ]"
+
+  tilde-B-success:
+    requires: [ sd@1:B-success ]
+    annotations:
+      screwdriver.cd/displayName: "✅ ~B [ ~sd@1:B○ ]"
+
+  tilde-A-failure:
+    requires: [ sd@1:A-success ]
+    annotations:
+      screwdriver.cd/displayName: "❌ ~A [ ~sd@1:A○ ]"
+
+  tilde-B-failure:
+    requires: [ sd@1:B-success ]
+    annotations:
+      screwdriver.cd/displayName: "❌ ~B [ ~sd@1:B○ ]"
+
+  A-success-B-success:
+    requires: [ sd@2:A-success, sd@2:B-success ]
+    annotations:
+      screwdriver.cd/displayName: "✅ AB [ sd@2:A○, sd@2:B○ ]"
+
+  A-success-B-failure:
+    requires: [ sd@2:A-success, sd@2:B-failure ]
+    annotations:
+      screwdriver.cd/displayName: "🔳 AB [ sd@2:A○, sd@2:B× ]"
+
+  A-failure-B-success:
+    requires: [ sd@2:A-failure, sd@2:B-success ]
+    annotations:
+      screwdriver.cd/displayName: "🔳 AB [ sd@2:A×, sd@2:B○ ]"
+
+  A-failure-B-failure:
+    requires: [ sd@2:A-failure, sd@2:B-failure ]
+    annotations:
+      screwdriver.cd/displayName: "🔳 AB [ sd@2:A×, sd@2:B× ]"
+
+  A-success-lB-success:
+    requires: [ sd@2:A-success, B-success ]
+    annotations:
+      screwdriver.cd/displayName: "✅ AB [ sd@2:A○, B○ ]"
+
+  A-success-lB-failure:
+    requires: [ sd@2:A-success, B-failure ]
+    annotations:
+      screwdriver.cd/displayName: "🔳 AB [ sd@2:A○, B× ]"
+
+  A-failure-lB-success:
+    requires: [ sd@2:A-failure, B-success ]
+    annotations:
+      screwdriver.cd/displayName: "🔳 AB [ sd@2:A×, B○ ]"
+
+  A-failure-lB-failure:
+    requires: [ sd@2:A-failure, B-failure ]
+    annotations:
+      screwdriver.cd/displayName: "🔳 AB [ sd@2:A×, B× ]"
+
+  tilde-A-success-tilde-B-success:
+    requires: [ ~sd@2:A-success, ~sd@2:B-success ]
+    annotations:
+      screwdriver.cd/displayName: "✅ AB [ ~sd@2:A○, ~sd@2:B○ ]"
+
+  tilde-A-success-tilde-B-failure:
+    requires: [ ~sd@2:A-success, ~sd@2:B-failure ]
+    annotations:
+      screwdriver.cd/displayName: "✅ AB [ ~sd@2:A○, ~sd@2:B× ]"
+
+  tilde-A-failure-tilde-B-success:
+    requires: [ ~sd@2:A-failure, ~sd@2:B-success ]
+    annotations:
+      screwdriver.cd/displayName: "✅ AB [ ~sd@2:A×, ~sd@2:B○ ]"
+
+  tilde-A-failure-tilde-B-failure:
+    requires: [ ~sd@2:A-failure, ~sd@2:B-failure ]
+    annotations:
+      screwdriver.cd/displayName: "🔳 AB [ ~sd@2A×, ~sd@2B× ]"
+
+  tilde-A-success-tilde-lB-success:
+    requires: [ ~sd@2:A-success, ~tilde-B-success ]
+    annotations:
+      screwdriver.cd/displayName: "✅ AB [ ~sd@2:A○, ~B○ ]"
+
+  tilde-A-failure-tilde-lB-success:
+    requires: [ ~sd@2:A-failure, ~tilde-B-success ]
+    annotations:
+      screwdriver.cd/displayName: "✅ AB [ ~sd@2:A×, ~B○ ]"
+
+  tilde-A-success-tilde-lB-failure:
+    requires: [ ~sd@2:A-success, ~tilde-B-failure ]
+    annotations:
+      screwdriver.cd/displayName: "✅ AB [ ~sd@2:A○, ~B× ]"
+
+  tilde-A-failure-tilde-lB-failure:
+    requires: [ ~sd@2:A-failure, ~B-failure ]
+    annotations:
+      screwdriver.cd/displayName: "🔳 AB [ ~sd@:2A×, ~B× ]"

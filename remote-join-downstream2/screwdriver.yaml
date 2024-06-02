@@ -1,0 +1,45 @@
+shared:
+  image: bitnami/git:latest
+  steps:
+    - test: echo 'test'
+
+jobs:
+  A-success:
+    requires: [ sd@1:A-success ]
+    annotations:
+      screwdriver.cd/displayName: "✅ A [ sd@1:A○ ]"
+
+  B-success:
+    requires: [ sd@1:B-success ]
+    annotations:
+      screwdriver.cd/displayName: "✅ B [ sd@1:B○ ]"
+
+  A-failure:
+    requires: [ sd@1:A-success ]
+    annotations:
+      screwdriver.cd/displayName: "❌ A [ sd@1:A○ ]"
+
+  B-failure:
+    requires: [ sd@1:B-success ]
+    annotations:
+      screwdriver.cd/displayName: "❌ B [ sd@1:B○ ]"
+
+  tilde-A-success:
+    requires: [ sd@1:A-success ]
+    annotations:
+      screwdriver.cd/displayName: "✅ ~A [ ~sd@1:A○ ]"
+
+  tilde-B-success:
+    requires: [ sd@1:B-success ]
+    annotations:
+      screwdriver.cd/displayName: "✅ ~B [ ~sd@1:B○ ]"
+
+  tilde-A-failure:
+    requires: [ sd@1:A-success ]
+    annotations:
+      screwdriver.cd/displayName: "❌ ~A [ ~sd@1:A○ ]"
+
+  tilde-B-failure:
+    requires: [ sd@1:B-success ]
+    annotations:
+      screwdriver.cd/displayName: "❌ ~B [ ~sd@1:B○ ]"
