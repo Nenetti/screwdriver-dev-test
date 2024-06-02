@@ -14,32 +14,32 @@ jobs:
     annotations:
       screwdriver.cd/displayName: "✅ B [ sd@1:B○ ]"
 
-  A-failure:
-    requires: [ sd@1:A-success ]
+  A-not-run:
+    requires: [ sd@1:A-failure ]
     annotations:
       screwdriver.cd/displayName: "❌ A [ sd@1:A○ ]"
 
-  B-failure:
-    requires: [ sd@1:B-success ]
+  B-not-run:
+    requires: [ sd@1:B-failure ]
     annotations:
-      screwdriver.cd/displayName: "❌ B [ sd@1:B○ ]"
+      screwdriver.cd/displayName: "❌ B [ sd@1:B□ ]"
 
   tilde-A-success:
     requires: [ sd@1:A-success ]
     annotations:
-      screwdriver.cd/displayName: "✅ ~A [ ~sd@1:A○ ]"
+      screwdriver.cd/displayName: "✅ ~A [ ~sd@1A○ ]"
 
   tilde-B-success:
     requires: [ sd@1:B-success ]
     annotations:
-      screwdriver.cd/displayName: "✅ ~B [ ~sd@1:B○ ]"
+      screwdriver.cd/displayName: "✅ ~B [ ~sd@1B○ ]"
 
-  tilde-A-failure:
-    requires: [ sd@1:A-success ]
+  tilde-A-not-run:
+    requires: [ sd@1:A-failure ]
     annotations:
-      screwdriver.cd/displayName: "❌ ~A [ ~sd@1:A○ ]"
+      screwdriver.cd/displayName: "❌ ~A [ ~sd@1A□ ]"
 
-  tilde-B-failure:
-    requires: [ sd@1:B-success ]
+  tilde-B-not-run:
+    requires: [ sd@1:B-failure ]
     annotations:
-      screwdriver.cd/displayName: "❌ ~B [ ~sd@1:B○ ]"
+      screwdriver.cd/displayName: "❌ ~B [ ~sd@1B□ ]"

@@ -51,7 +51,7 @@ jobs:
   lA-success-and-A-not-run:
     requires: [ A-success, sd@2:A-not-run ]
     annotations:
-      screwdriver.cd/displayName: "🔳 AA [ A○, sd@2:A× ]"
+      screwdriver.cd/displayName: "🔳 AA [ A○, sd@2:A□ ]"
 
   lA-failure-and-A-not-run:
     requires: [ A-failure, sd@2:A-not-run]

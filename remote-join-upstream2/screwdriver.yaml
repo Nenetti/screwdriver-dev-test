@@ -45,17 +45,17 @@ jobs:
   A-success-and-B-not-run:
     requires: [ sd@2:A-success, sd@3:B-not-run ]
     annotations:
-      screwdriver.cd/displayName: "🔳 AB [ sd@2:A○, sd@3:B× ]"
+      screwdriver.cd/displayName: "🔳 AB [ sd@2:A○, sd@3:B□ ]"
 
   A-not-run-and-B-success:
     requires: [ sd@2:A-not-run, sd@3:B-success ]
     annotations:
-      screwdriver.cd/displayName: "🔳 AB [ sd@2:A×, sd@3:B○ ]"
+      screwdriver.cd/displayName: "🔳 AB [ sd@2:A□, sd@3:B○ ]"
 
   A-not-run-and-B-not-run:
     requires: [ sd@2:A-not-run, sd@3:B-not-run ]
     annotations:
-      screwdriver.cd/displayName: "🔳 AB [ sd@2:A×, sd@3:B× ]"
+      screwdriver.cd/displayName: "🔳 AB [ sd@2:A□, sd@3:B□ ]"
 
   tilde-A-success-tilde-B-success:
     requires: [ ~sd@2:A-success, ~sd@3:B-success ]
@@ -65,17 +65,17 @@ jobs:
   tilde-A-not-run-tilde-B-success:
     requires: [ ~sd@2:A-not-run, ~sd@3:B-success ]
     annotations:
-      screwdriver.cd/displayName: "✅ AB [ ~sd@2:A×, ~sd@3:B○ ]"
+      screwdriver.cd/displayName: "✅ AB [ ~sd@2:A□, ~sd@3:B○ ]"
 
   tilde-A-success-tilde-B-not-run:
     requires: [ ~sd@2:A-success, ~sd@3:B-not-run ]
     annotations:
-      screwdriver.cd/displayName: "✅ AB [ ~sd@2:A○, ~sd@3:B× ]"
+      screwdriver.cd/displayName: "✅ AB [ ~sd@2:A○, ~sd@3:B□ ]"
 
   tilde-A-not-run-tilde-B-not-run:
     requires: [ ~sd@2:A-not-run, ~sd@3:B-not-run ]
     annotations:
-      screwdriver.cd/displayName: "🔳 AB [ ~sd@2:A×, ~sd@3:B× ]"
+      screwdriver.cd/displayName: "🔳 AB [ ~sd@2:A□, ~sd@3:B□ ]"
 
   # --------------------------------------------------------------------------------------------------------------------
   #     3 triggers
@@ -88,12 +88,12 @@ jobs:
   A-success-and-B-success-and-C-not-run:
     requires: [ sd@2:A-success, sd@2:B-success, sd@3:C-success ]
     annotations:
-      screwdriver.cd/displayName: "🔳 ABC [ sd@2:A○, sd@2:B○, sd@3:C× ]"
+      screwdriver.cd/displayName: "🔳 ABC [ sd@2:A○, sd@2:B○, sd@3:C□ ]"
 
   A-success-and-B-not-run-and-C-not-run:
     requires: [ sd@2:A-success, sd@2:B-success, sd@3:C-success ]
     annotations:
-      screwdriver.cd/displayName: "🔳 ABC [ sd@2:A○, sd@2:B×, sd@3:C× ]"
+      screwdriver.cd/displayName: "🔳 ABC [ sd@2:A○, sd@2:B□, sd@3:C□ ]"
 
   A-success-and-B-success-and-tilde-C-success:
     requires: [ sd@2:A-success, sd@2:B-success, ~sd@3:C-success ]
@@ -103,9 +103,9 @@ jobs:
   A-success-and-B-success-and-tilde-C-not-run:
     requires: [ sd@2:A-success, sd@2:B-success, ~sd@3:C-not-run ]
     annotations:
-      screwdriver.cd/displayName: "✅ ABC [ sd@2:A○, sd@2:B○, ~sd@3:C× ]"
+      screwdriver.cd/displayName: "✅ ABC [ sd@2:A○, sd@2:B○, ~sd@3:C□ ]"
 
   A-success-and-B-not-run-and-tilde-C-not-run:
     requires: [ sd@2:A-success, sd@2:B-not-run, ~sd@3:C-not-run ]
     annotations:
-      screwdriver.cd/displayName: "🔳 ABC [ sd@2:A○, sd@2:B×, sd@3:C× ]"
+      screwdriver.cd/displayName: "🔳 ABC [ sd@2:A○, sd@2:B□, sd@3:C□ ]"
