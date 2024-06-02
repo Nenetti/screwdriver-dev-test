@@ -13,9 +13,9 @@ jobs:
     requires: [ ~commit, ~pr ]
     annotations:
       screwdriver.cd/displayName: "❌ A [ ~commit, ~pr ]"
-    steps: &failure-steps
+    steps: &failure_steps
       - meta: |
-          if [ "$(meta get restart)" -ne '1' ]; then
+          if [ "$(meta get restart)" != '1' ]; then
             meta set restart '1'
             exit 1
           fi
@@ -29,7 +29,7 @@ jobs:
     requires: [ ~commit, ~pr ]
     annotations:
       screwdriver.cd/displayName: "❌ B× [ ~commit, ~pr ]"
-    steps: *failure-steps
+    steps: *failure_steps
 
   A-success-and-A-success:
     requires: [ A-success, sd@2:A-success ]

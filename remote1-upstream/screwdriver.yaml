@@ -7,15 +7,15 @@ jobs:
   A-success:
     requires: [ ~commit, ~pr ]
     annotations:
-      screwdriver.cd/displayName: "A○"
+      screwdriver.cd/displayName: "✅ A [ ~commit, ~pr ]"
 
   A-failure:
     requires: [ ~commit, ~pr ]
     annotations:
-      screwdriver.cd/displayName: "A×"
-    steps: &failure-steps
+      screwdriver.cd/displayName: "❌ A [ ~commit, ~pr ]"
+    steps: &failure_steps
       - meta: |
-          if [ "$(meta get restart)" -ne '1' ]; then
+          if [ "$(meta get restart)" != '1' ]; then
             meta set restart '1'
             exit 1
           fi

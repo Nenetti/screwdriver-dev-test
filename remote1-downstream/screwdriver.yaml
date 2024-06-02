@@ -7,39 +7,48 @@ jobs:
   A-success:
     requires: [ sd@1:A-success ]
     annotations:
-      screwdriver.cd/displayName: "[ A○ ]"
+      screwdriver.cd/displayName: "✅ A [ sd@1:A○ ]"
+
+  A-not-run:
+    requires: [ sd@1:A-failure ]
+    annotations:
+      screwdriver.cd/displayName: "🔳 A [ sd@1:A○ ]"
+    steps: &failure_steps
+      - meta: |
+          if [ "$(meta get restart)" != '1' ]; then
+            meta set restart '1'
+            exit 1
+          fi
 
   B-success:
     requires: [ sd@1:A-success ]
     annotations:
-      screwdriver.cd/displayName: "[ B○ ]"
+      screwdriver.cd/displayName: "✅ B [ sd@1:A○ ]"
 
-  A-failure:
+  B-not-run:
     requires: [ sd@1:A-failure ]
     annotations:
-      screwdriver.cd/displayName: "[ A× ]"
-
-  B-failure:
-    requires: [ sd@1:A-failure ]
-    annotations:
-      screwdriver.cd/displayName: "[ B× ]"
+      screwdriver.cd/displayName: "🔳 B [ sd@1:A× ]"
+    steps: *failure_steps
 
   tilde-A-success:
     requires: [ ~sd@1:A-success ]
     annotations:
-      screwdriver.cd/displayName: "[ ~A○ ]"
+      screwdriver.cd/displayName: "✅ A [ ~sd@1:A○ ]"
+
+  tilde-A-not-run:
+    requires: [ ~sd@1:A-failure ]
+    annotations:
+      screwdriver.cd/displayName: "🔳 A [ ~sd@1:A× ]"
+    steps: *failure_steps
 
   tilde-B-success:
     requires: [ ~sd@1:A-success ]
     annotations:
-      screwdriver.cd/displayName: "[ ~B○ ]"
+      screwdriver.cd/displayName: "✅ B [ ~sd@1:A○ ]"
 
-  tilde-A-failure:
+  tilde-B-not-run:
     requires: [ ~sd@1:A-failure ]
     annotations:
-      screwdriver.cd/displayName: "[ ~A× ]"
-
-  tilde-B-failure:
-    requires: [ ~sd@1:A-failure ]
-    annotations:
-      screwdriver.cd/displayName: "[ ~B× ]"
+      screwdriver.cd/displayName: "🔳 B [ ~sd@1:A× ]"
+    steps: *failure_steps
