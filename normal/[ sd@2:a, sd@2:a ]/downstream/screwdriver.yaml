@@ -9,8 +9,8 @@ shared:
     - test: echo 'test'
 
 parameters:
-  success_a: [" ", true", "false"]
-  success_b: [" ", "true", "false"]
+  success_a: ["a", true", "false"]
+  success_b: ["a", "true", "false"]
 
 # ----------------------------------------------------------------------------------------------------------------------
 #
@@ -26,9 +26,9 @@ jobs:
     requires: [ ~hub_a ]
     steps:
       - metadata: |
-          meta get parameters
-          meta get parameters.success_a
-          meta get parameters.success_a.value
+          echo "$(meta get parameters)"
+          echo "$(meta get parameters.success_a)"
+          echo "$(meta get parameters.success_a.value)"
           if [ "$(meta get parameters.success_a.value == 'false' )" ]; then
             exit 1
           fi
