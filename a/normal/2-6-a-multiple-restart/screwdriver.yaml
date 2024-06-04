@@ -1,0 +1,35 @@
+# ----------------------------------------------------------------------------------------------------------------------
+#
+#   Shared
+#
+# ----------------------------------------------------------------------------------------------------------------------
+shared:
+  image: bitnami/git:latest
+  annotations:
+    restart:
+      steps: &restart_success_steps
+        - restart: |
+            if [ "$(meta get parameters.restart_all.value)" == "" ] && [ "$(meta get parameters.restart.value == "" )" ]; then
+              exit 1
+            fi
+  steps:
+    - test: echo 'test'
+
+parameters:
+  restart_all: ["false", "true"]
+
+# ----------------------------------------------------------------------------------------------------------------------
+#
+#   Jobs
+#
+# ----------------------------------------------------------------------------------------------------------------------
+jobs:
+  hub:
+    requires: [ ~commit, ~pr ]
+  a:
+    requires: [ ~hub ]
+    steps: *restart_success_steps
+  target1:
+    requires: [ a ]
+  target2:
+    requires: [ a ]

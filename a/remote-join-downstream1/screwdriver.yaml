@@ -14,10 +14,20 @@ jobs:
     annotations:
       screwdriver.cd/displayName: "✅ B [ sd@1:B○ ]"
 
-  A-not-run:
+  A-success-A-success2-join-success:
     requires: [ sd@1:A-failure ]
     annotations:
-      screwdriver.cd/displayName: "❌ A [ sd@1:A○ ]"
+      screwdriver.cd/displayName: "❌ A [ sd@1:A-success, A-success2 ]"
+
+[ sd@1:A-success, A-success2 ]
+[ sd@1:A-success, B-success ]
+[ sd@1:A-success, A-restart ]
+[ sd@1:A-success, B-restart ]
+[ sd@1:A-restart, A-restart2 ]
+[ sd@1:A-restart, B-restart ]
+
+if [ "$(meta get parameters.shared_restart.value)" == "REPLACE_ME"] && [ "$(meta get parameters.restart.value == "REPLACE_ME" )" ];
+  exit 1
 
   B-not-run:
     requires: [ sd@1:B-failure ]
