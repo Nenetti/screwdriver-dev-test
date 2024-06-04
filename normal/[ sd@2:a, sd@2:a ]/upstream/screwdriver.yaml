@@ -1,0 +1,51 @@
+# ----------------------------------------------------------------------------------------------------------------------
+#
+#   Shared
+#
+# ----------------------------------------------------------------------------------------------------------------------
+shared:
+  image: bitnami/git:latest
+  annotations:
+    success:
+      steps: &default_success
+        - restart: |
+            if [ "$(meta get parameters.success.value == "" )" ]; then
+              exit 1
+            fi
+      parameters:
+        success: ["true", "false"]
+    failure:
+      steps: &default_failure
+        - restart: |
+            if [ "$(meta get parameters.success.value == "" )" ]; then
+              exit 1
+            fi
+      parameters:
+        success: ["true", "false"]
+  steps:
+    - test: echo 'test'
+
+# ----------------------------------------------------------------------------------------------------------------------
+#
+#   Jobs
+#
+# ----------------------------------------------------------------------------------------------------------------------
+jobs:
+  hub:
+    requires: [ ~commit, ~pr ]
+  target1:
+    requires: [ sd@2:a-success, sd@2:b-success ]
+    annotations:
+      screwdriver.cd/displayName: "[ sd@2:a✅, sd@2:b✅ ]"
+  target2:
+    requires: [ sd@2:a-success, sd@2:b-failure ]
+    annotations:
+      screwdriver.cd/displayName: "[ sd@2:a✅, sd@2:b❌ ]"
+  target3:
+    requires: [ sd@2:a-failure, sd@2:b-success ]
+    annotations:
+      screwdriver.cd/displayName: "[ sd@2:a❌, sd@2:b✅ ]"
+  target4:
+    requires: [ sd@2:a-failure, sd@2:b-failure ]
+    annotations:
+      screwdriver.cd/displayName: "[ sd@2:a❌, sd@2:b❌ ]"
