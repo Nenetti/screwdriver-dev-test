@@ -9,8 +9,8 @@ shared:
     - test: echo 'test'
 
 parameters:
-  success_a: ["a", true", "false"]
-  success_b: ["a", "true", "false"]
+  success_a: [' ', 'true', 'false']
+  success_b: [' ', 'true', 'false']
 
 # ----------------------------------------------------------------------------------------------------------------------
 #
