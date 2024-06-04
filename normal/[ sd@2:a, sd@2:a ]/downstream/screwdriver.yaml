@@ -26,7 +26,9 @@ jobs:
     requires: [ ~hub_a ]
     steps:
       - metadata: |
-          meta dump
+          meta get parameters
+          meta get parameters.success_a
+          meta get parameters.success_a.value
           if [ "$(meta get parameters.success_a.value == 'false' )" ]; then
             exit 1
           fi
