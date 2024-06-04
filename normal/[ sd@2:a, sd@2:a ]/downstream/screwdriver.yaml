@@ -26,31 +26,28 @@ jobs:
     requires: [ ~hub_a ]
     steps:
       - metadata: |
-          echo "$(meta get parameters)"
-          echo "$(meta get parameters.success_a)"
-          echo "$(meta get parameters.success_a.value)"
-          if [ "$(meta get parameters.success_a.value == 'false' )" ]; then
+          if [ "$(meta get parameters.success_a.value)" == 'false' ]; then
             exit 1
           fi
   a-failure:
     requires: [ ~hub_a ]
     steps:
       - metadata: |
-          if [ "$(meta get parameters.success_a.value != 'true' )" ]; then
+          if [ "$(meta get parameters.success_a.value)" != 'true' ]; then
             exit 1
           fi
   b-success:
     requires: [ ~hub_b ]
     steps:
       - metadata: |
-          if [ "$(meta get parameters.success_b.value == 'false' )" ]; then
+          if [ "$(meta get parameters.success_b.value)" == 'false' ]; then
             exit 1
           fi
   b-failure:
     requires: [ ~hub_b ]
     steps:
       - metadata: |
-          if [ "$(meta get parameters.success_b.value != 'true' )" ]; then
+          if [ "$(meta get parameters.success_b.value)" != 'true' ]; then
             exit 1
           fi
   target:

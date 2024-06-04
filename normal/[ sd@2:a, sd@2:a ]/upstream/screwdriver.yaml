@@ -5,23 +5,6 @@
 # ----------------------------------------------------------------------------------------------------------------------
 shared:
   image: bitnami/git:latest
-  annotations:
-    success:
-      steps: &default_success
-        - restart: |
-            if [ "$(meta get parameters.success.value == "" )" ]; then
-              exit 1
-            fi
-      parameters:
-        success: ["true", "false"]
-    failure:
-      steps: &default_failure
-        - restart: |
-            if [ "$(meta get parameters.success.value == "" )" ]; then
-              exit 1
-            fi
-      parameters:
-        success: ["true", "false"]
   steps:
     - test: echo 'test'
 
