@@ -4,20 +4,7 @@
 #
 # ----------------------------------------------------------------------------------------------------------------------
 shared:
-  image: bitnami/git:latest
-  annotations:
-    a:
-      steps: &a
-        - metadata: |
-            if [ "$(meta get parameters.success_a.value != "true" )" ]; then
-              exit 1
-            fi
-    b:
-      steps: &b
-        - metadata: |
-            if [ "$(meta get parameters.success_b.value != "true" )" ]; then
-              exit 1
-            fi
+  image: alpine:latest
   steps:
     - test: echo 'test'
 
@@ -39,28 +26,29 @@ jobs:
     requires: [ ~hub_a ]
     steps:
       - metadata: |
-          if [ "$(meta get parameters.success_a.value == "false" )" ]; then
+          meta dump
+          if [ "$(meta get parameters.success_a.value == 'false' )" ]; then
             exit 1
           fi
   a-failure:
     requires: [ ~hub_a ]
     steps:
       - metadata: |
-          if [ "$(meta get parameters.success_a.value != "true" )" ]; then
+          if [ "$(meta get parameters.success_a.value != 'true' )" ]; then
             exit 1
           fi
   b-success:
     requires: [ ~hub_b ]
     steps:
       - metadata: |
-          if [ "$(meta get parameters.success_b.value == "false" )" ]; then
+          if [ "$(meta get parameters.success_b.value == 'false' )" ]; then
             exit 1
           fi
   b-failure:
     requires: [ ~hub_b ]
     steps:
       - metadata: |
-          if [ "$(meta get parameters.success_b.value != "true" )" ]; then
+          if [ "$(meta get parameters.success_b.value != 'true' )" ]; then
             exit 1
           fi
   target:

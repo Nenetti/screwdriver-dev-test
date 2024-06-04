@@ -4,7 +4,7 @@
 #
 # ----------------------------------------------------------------------------------------------------------------------
 shared:
-  image: bitnami/git:latest
+  image: alpine:latest
   annotations:
     success:
       steps: &default_success
