@@ -18,10 +18,12 @@ parameters:
 #
 # ----------------------------------------------------------------------------------------------------------------------
 jobs:
+  hub:
+    requires: [ ~sd@1:hub ]
   hub_a:
-    requires: [ ~sd@1:hub ]
+    requires: [ ~hub ]
   hub_b:
-    requires: [ ~sd@1:hub ]
+    requires: [ ~hub ]
   a-success:
     requires: [ ~hub_a ]
     steps:
