@@ -3,6 +3,8 @@ shared:
 jobs:
     first:
         requires: [~pr, ~commit]
+        environment:
+          USER_SHELL_BIN: bash
         steps: 
             - echo: |
                 for i in {1..10}
