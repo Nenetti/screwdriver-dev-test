@@ -4,4 +4,9 @@ jobs:
     first:
         requires: [~pr, ~commit]
         steps: 
-            - echo: echo first
+            - echo: |
+                for i in {1..10}
+                do
+                  echo "${i}"
+                  sleep "${i}"
+                done
